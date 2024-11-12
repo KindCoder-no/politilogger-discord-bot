@@ -15,7 +15,14 @@ const db = mongoose.connection;
 db.on("error", (error) => console.error(error));
 db.once("open", () => console.log("Connected to MongoDB"));
 
-const client = new Client({ intents: [GatewayIntentBits.Guilds] })
+const client = new Client({
+	intents: [
+		GatewayIntentBits.Guilds,
+		GatewayIntentBits.GuildMembers,
+		GatewayIntentBits.GuildMessages,
+		GatewayIntentBits.MessageContent,
+	]
+})
 
 
 client.commands = new Collection();
