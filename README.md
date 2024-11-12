@@ -16,5 +16,7 @@ This is the first bot i have made since Discord added the slash commands, so the
 
 - Add support for direct messages with updates
 - Better code structure and error handling
+- Better message/embed handling and structure
+  - The messages could be structured/sendt better
 
 Im open for ideas and contributions, PR's are welcome
