@@ -65,16 +65,15 @@ const rest = new REST().setToken(process.env.DISCORD_TOKEN);
 (async () => {
 	try {
 		console.log(`Started refreshing ${commands.length} application (/) commands.`);
-        
-            /*rest.delete(Routes.applicationCommand(process.env.CLIENT_ID, 1305657754140282961))
-            .then(() => console.log('Successfully deleted application command'))
-            .catch(console.error);*/
-        
-       
-		// The put method is used to fully refresh all commands in the guild with the current set
-                    /*Routes.applicationCommands(process.env.CLIENT_ID),*/
-		//Routes.applicationGuildCommands(process.env.CLIENT_ID, process.env.GUILD_ID),
+               
+		// The put method is used to fully refresh all commands in the guild with the current set (USE IN DEV)
+        /*const data = await await rest.put(
+			Routes.applicationGuildCommands(process.env.CLIENT_ID, process.env.GUILD_ID),
+            { body: commands },
+        );*/
+		
 
+		// This function is for registering global commands (USE IN PRODUCTION)
 		const data = await await rest.put(
 			Routes.applicationCommands(process.env.CLIENT_ID),
             { body: commands },
