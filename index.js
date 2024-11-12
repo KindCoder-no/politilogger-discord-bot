@@ -17,15 +17,6 @@ db.once("open", () => console.log("Connected to MongoDB"));
 
 const client = new Client({ intents: [GatewayIntentBits.Guilds] })
 
-// check if database.json exists
-if (!fs.existsSync('database.json')) {
-	fs.writeFileSync('database.json', JSON.stringify([]));
-}
-// check if recheck_database.json exists
-if (!fs.existsSync('recheck_database.json')) {
-	fs.writeFileSync('recheck_database.json', JSON.stringify([]));
-}
-
 
 client.commands = new Collection();
 const commands = [];
