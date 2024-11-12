@@ -1,0 +1,5 @@
+node_modules/
+.env
+package-lock.json
+database.json
+recheck_database.json
