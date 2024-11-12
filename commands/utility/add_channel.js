@@ -1,5 +1,6 @@
 const { SlashCommandBuilder, PermissionsBitField, StringSelectMenuOptionBuilder, StringSelectMenuBuilder, ActionRowBuilder, ComponentType } = require('discord.js');
 const fs = require('fs');
+const Channels = require('../../models/channels');
 
 module.exports = {
 	data: new SlashCommandBuilder()
@@ -43,13 +44,14 @@ module.exports = {
 			return interaction.reply('Kanalen må være en tekst kanal.');
 		}
 
-		const database = JSON.parse(fs.readFileSync('database.json', 'utf8'));
+		//const database = JSON.parse(fs.readFileSync('database.json', 'utf8'));
+		const database = await Channels.findOne({ guild_id: interaction.guildId });
 
 		if (channel.guildId !== interaction.guildId) {
 			return interaction.reply('Kanalen må være i samme guild som interaksjonen.');
 		}
 
-		if (database.find(row => row.channel === channel.id)) {
+		if (database) {
 			return interaction.reply('Kanalen eksisterer allerede i databasen.');
 		}
 
@@ -100,15 +102,14 @@ module.exports = {
 				return i.reply('Du må velge minst en kategori');
 			}
 
-			i.update({ content: 'Notifikasjoner satt opp', components: [] });
 
 			let send_categories = [];
 
-			if(!i.values.includes('all_categories')) {
+			if (!i.values.includes('all_categories')) {
 				send_categories = i.values;
 			}
 
-			database.push({
+			const newChannel = new Channels({
 				guild_id: channel.guildId,
 				channel: channel.id,
 				police_department: policeDepartment,
@@ -116,8 +117,10 @@ module.exports = {
 				last_message: null
 			});
 
-			fs.writeFileSync('database.json', JSON.stringify(database, null, 2));
-			console.log(i.values);
+			await newChannel.save();
+
+			i.update({ content: `Notifikasjoner fra ${policeDepartment} satt opp for kanalen ${channel} med kategoriene: ${i.values.join(", ")}`, components: [] });
+
 		});
 	}
 };

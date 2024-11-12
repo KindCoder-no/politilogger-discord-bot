@@ -2,22 +2,20 @@
 
 const fs = require('node:fs');
 const path = require('node:path');
+const mongoose = require("mongoose");
 
 const { REST, Routes, Client, Collection, Events, GatewayIntentBits } = require('discord.js');
 const dotenv = require('dotenv');
 
 dotenv.config();
 
-const client = new Client({ intents: [GatewayIntentBits.Guilds] })
+// MongoDB
+mongoose.connect(process.env.MONGODB_URL || "mongodb://localhost:27017/politilogger-discord-bot");
+const db = mongoose.connection;
+db.on("error", (error) => console.error(error));
+db.once("open", () => console.log("Connected to MongoDB"));
 
-// check if database.json exists
-if (!fs.existsSync('database.json')) {
-	fs.writeFileSync('database.json', JSON.stringify([]));
-}
-// check if recheck_database.json exists
-if (!fs.existsSync('recheck_database.json')) {
-	fs.writeFileSync('recheck_database.json', JSON.stringify([]));
-}
+const client = new Client({ intents: [GatewayIntentBits.Guilds] })
 
 
 client.commands = new Collection();
@@ -35,7 +33,7 @@ for (const folder of commandFolders) {
 		// Set a new item in the Collection with the key as the command name and the value as the exported module
 		if ('data' in command && 'execute' in command) {
 			client.commands.set(command.data.name, command);
-            commands.push(command.data.toJSON());
+			commands.push(command.data.toJSON());
 		} else {
 			console.log(`[WARNING] The command at ${filePath} is missing a required "data" or "execute" property.`);
 		}
@@ -65,19 +63,19 @@ const rest = new REST().setToken(process.env.DISCORD_TOKEN);
 (async () => {
 	try {
 		console.log(`Started refreshing ${commands.length} application (/) commands.`);
-               
+
 		// The put method is used to fully refresh all commands in the guild with the current set (USE IN DEV)
-        /*const data = await await rest.put(
+		/*const data = await await rest.put(
 			Routes.applicationGuildCommands(process.env.CLIENT_ID, process.env.GUILD_ID),
-            { body: commands },
-        );*/
-		
+			{ body: commands },
+		);*/
+
 
 		// This function is for registering global commands (USE IN PRODUCTION)
 		const data = await await rest.put(
 			Routes.applicationCommands(process.env.CLIENT_ID),
-            { body: commands },
-        );
+			{ body: commands },
+		);
 
 		console.log(`Successfully reloaded ${data.length} application (/) commands.`);
 	} catch (error) {

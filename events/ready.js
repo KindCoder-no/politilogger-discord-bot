@@ -8,22 +8,15 @@ module.exports = {
 	once: true,
 	execute(client) {
 		console.log(`Ready! Logged in as ${client.user.tag}`);
-		async function sendUpdates (){
-			const channel = client.channels.cache.get('1305654947756380280');
-			channel.send('Test');
-			const latest_calls = await fetchLatestUpdate('all', ['Kriminalitet', 'Trafikk', 'Brann', 'Hendelser', 'Annet'])
-
-			console.log(latest_calls);
-		}
-		
-		//sendUpdates();
-
+		console.log("Starting checks for new messages");
+		// Check for new messages every 10
 		setInterval(() => {
+			console.log("Checking for new messages and updates");
 			runMessageCheck(client);
 
 			runMessageRecheck(client);
 		}, 10 * 1000);
 
-		
+
 	},
 };
