@@ -45,7 +45,7 @@ module.exports = {
 		}
 
 		//const database = JSON.parse(fs.readFileSync('database.json', 'utf8'));
-		const database = await Channels.findOne({ guild_id: interaction.guildId });
+		const database = await Channels.findOne({ channel: channel.id });
 
 		if (channel.guildId !== interaction.guildId) {
 			return interaction.reply('Kanalen må være i samme guild som interaksjonen.');
@@ -61,20 +61,20 @@ module.exports = {
 
 		const choices = [
 			{ label: 'Alle', value: 'all_categories' },
-			{ label: 'Arrangement', value: 'Arrangement' },
-			{ label: 'Brann', value: 'Brann' },
-			{ label: 'Dyr', value: 'Dyr' },
-			{ label: 'Innbrudd', value: 'Innbrudd' },
-			{ label: 'Ro og orden', value: 'Ro og orden' },
-			{ label: 'Redning', value: 'Redning' },
-			{ label: 'Savnet', value: 'Savnet' },
-			{ label: 'Sjø', value: 'Sjø' },
-			{ label: 'Skadeverk', value: 'Skadeverk' },
-			{ label: 'Tyveri', value: 'Tyveri' },
-			{ label: 'Ulykke', value: 'Ulykke' },
-			{ label: 'Voldshendelse', value: 'Voldshendelse' },
-			{ label: 'Vær', value: 'Vær' },
-			{ label: 'Andre hendelser', value: 'Andre hendelser' }
+			{ label: '⛺️ Arrangement', value: 'Arrangement' },
+			{ label: '🚒 Brann', value: 'Brann' },
+			{ label: '🐕 Dyr', value: 'Dyr' },
+			{ label: '🏠 Innbrudd', value: 'Innbrudd' },
+			{ label: '💥 Ro og orden', value: 'Ro og orden' },
+			{ label: '🛟 Redning', value: 'Redning' },
+			{ label: '😶‍🌫️ Savnet', value: 'Savnet' },
+			{ label: '🌊 Sjø', value: 'Sjø' },
+			{ label: '💥 Skadeverk', value: 'Skadeverk' },
+			{ label: '💥 Tyveri', value: 'Tyveri' },
+			{ label: '🚗 Ulykke', value: 'Ulykke' },
+			{ label: '💥 Voldshendelse', value: 'Voldshendelse' },
+			{ label: '⛅️ Vær', value: 'Vær' },
+			{ label: '🤔 Andre hendelser', value: 'Andre hendelser' }
 		];
 
 		const selectMenu = new StringSelectMenuBuilder()
