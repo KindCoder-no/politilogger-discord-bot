@@ -1,22 +1,26 @@
 # Politi Logger Discord Bot
 
-**NB! This application is using politiet.no api's, and if they contact me and disallow the usage of their api, this repo will be removed/depricated and the bot will become offline**
+A bot that fetches the latest updates from [politiloggen](https://www.politiet.no/politiloggen/) and posts them directly into a Discord channel.
 
-This is an easy integration to get updates from politiet.no/politiloggen directly in a discord channel
+> **Note**: This application uses the public APIs from politiet.no. If we receive a request to stop using their API, this repository will be deprecated, and the bot will be taken offline.
 
-You can add the bot with this url:
+## Features
 
-```
-https://discord.com/oauth2/authorize?client_id=1305653389107003493&permissions=2147494976&integration_type=0&scope=bot
-```
+- Fetches real-time updates from politiet.no's log.
+- Posts updates directly to your designated Discord channel.
 
-This is the first bot i have made since Discord added the slash commands, so the code and functions may not be pretty
+## Getting Started
 
-## Todo:
+You can add the Politi Logger Discord Bot to your server using [this link](https://discord.com/oauth2/authorize?client_id=1305653389107003493&permissions=2147494976&integration_type=0&scope=bot).
 
-- Add support for direct messages with updates
-- Better code structure and error handling
-- Better message/embed handling and structure
-  - The messages could be structured/sendt better
+This bot is my first using Discord’s slash command system, so while it functions well, some code structure and features may be refined over time.
 
-Im open for ideas and contributions, PR's are welcome
+## Future Improvements
+
+- **Direct Message Support**: Enable users to receive updates via direct message.
+- **Code Structure**: Improve organization and add robust error handling.
+- **Message and Embed Structure**: Enhance formatting and delivery of updates for better readability.
+
+## Contributing
+
+Ideas and contributions are welcome! Feel free to open a pull request if you have improvements in mind.
